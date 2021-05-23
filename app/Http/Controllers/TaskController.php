@@ -39,4 +39,17 @@ class TaskController extends Controller
         ], 201);
 
     }
+
+    //FUNCTION SHOW ALL TASK OF USER
+    public function showAll(Request $request){
+
+        //401 UNAUTHENTICATED GÉRÉ PAR SANCTUM
+
+        $tasks = Task::where('user_id', $request->user()->id)->get();
+
+        return response()->json([
+            'tasks' => $tasks
+        ], 201);
+
+    }
 }

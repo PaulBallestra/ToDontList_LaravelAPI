@@ -17,3 +17,4 @@ Route::middleware('auth:sanctum')->post('auth/logout', [ApiTokenController::clas
 
 //Tasks
 Route::middleware('auth:sanctum')->post('tasks', [TaskController::class, 'create']);
+Route::middleware('auth:sanctum')->get('tasks', [TaskController::class, 'showAll']);
