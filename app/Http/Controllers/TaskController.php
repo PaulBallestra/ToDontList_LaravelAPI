@@ -52,4 +52,47 @@ class TaskController extends Controller
         ], 201);
 
     }
+
+    //FUNCTION CUSTOM SHOW TASK ID
+    public function show(Request $request, $id){
+
+        //401 UNAUTHENTICATED GÉRÉ PAR SANCTUM
+
+        //On recup la tache
+        $ifTaskExists = Task::where('id', $id)->exists();
+
+        //CHECK IF EXIST 404
+        if(!$ifTaskExists){
+            return response()->json([
+                'errors' => "La tâche n'existe pas."
+            ], 404);
+        }
+
+        $task = Task::where('id', $id)->first();
+
+        //CHECK IF USER CAN USE THAT TASK 403
+        if($task->user_id !== $request->user()->id){
+            return response()->json([
+                'errors' => "Accès à la tâche non autorisé."
+            ], 403);
+        }
+
+        //STATUS 200 COOL
+        return response()->json([
+            'id' => $task->id,
+            'created_at' => $task->created_at,
+            'updated_at' => $task->updated_at,
+            'body' => $task->body,
+            'done' => $task->done,
+            'user' => [
+                'id' => $request->user()->id,
+                'created_at' => $request->user()->created_at,
+                'updated_at' => $request->user()->updated_at,
+                'name' => $request->user()->name,
+                'email' => $request->user()->email,
+            ]
+        ], 200);
+
+    }
+
 }
