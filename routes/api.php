@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->post('auth/logout', [ApiTokenController::clas
 Route::middleware('auth:sanctum')->post('tasks', [TaskController::class, 'create']);
 Route::middleware('auth:sanctum')->get('tasks', [TaskController::class, 'showAll']);
 Route::middleware('auth:sanctum')->get('tasks/{id}', [TaskController::class, 'show']);
+Route::middleware('auth:sanctum')->delete('tasks/{id}', [TaskController::class, 'delete']);
