@@ -25,7 +25,7 @@ class ApiTokenController extends Controller
 
         //Si l'user existe 409
         if($exists){
-            return response()->json(['error' => "Utilisateur déjà inscrit"], 409);
+            return response()->json(['errors' => "Utilisateur déjà inscrit"], 409);
         }
 
         //Create USER
@@ -57,7 +57,7 @@ class ApiTokenController extends Controller
 
         //Data CHECK
         if(!$user || !Hash::check($request->password, $user->password)){
-            return response()->json(['errors' => "Identifiant Inconnu"], 401);
+            return response()->json(['errors' => "Identifiants inconnus ou erronés"], 401);
         }
 
         //Suppresion de l'ancien token
@@ -72,23 +72,24 @@ class ApiTokenController extends Controller
 
     }
 
+    public function logout(Request $request){
+
+
+
+    }
+
     public function me(Request $request){
 
-        //dd($request->user());
+        //401 UNAUTHORYSED GERÉ PAR SANCTUM
 
-        if(!$request->user()){
-            return response()->json([
-                "errors" => "Unauthenticated"
-            ], 401);
-        }
-
+        //200 COOL
         return response()->json([
             'id' => $request->user()->id,
             'created_at' => $request->user()->created_at,
             'updated_at' => $request->user()->updated_at,
             'name' => $request->user()->name,
             'email' => $request->user()->email
-        ]);
+        ], 200);
 
     }
 
