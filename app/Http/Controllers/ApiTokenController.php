@@ -11,10 +11,11 @@ use Illuminate\Validation\ValidationException;
 class ApiTokenController extends Controller
 {
 
+    //FONCTION REGISTER
     public function register(Request $request){
 
         //User validation champs 422
-        $validated = $request->validate([
+        $request->validate([
             'email' => 'required|email',
             'name' => 'required',
             'password' => 'required'
@@ -45,6 +46,7 @@ class ApiTokenController extends Controller
 
     }
 
+    //FUCNTION LOGIN
     public function login(Request $request){
 
         //Validation champs 422
@@ -72,6 +74,7 @@ class ApiTokenController extends Controller
 
     }
 
+    //FUNCTION LOGOUT
     public function logout(Request $request){
 
         //401 UNAUTHENTICATED GÉRÉ PAR SANCTUM
@@ -84,6 +87,7 @@ class ApiTokenController extends Controller
 
     }
 
+    //FUNCTION ME - profil
     public function me(Request $request){
 
         //401 UNAUTHENTICATED GÉRÉ PAR SANCTUM
