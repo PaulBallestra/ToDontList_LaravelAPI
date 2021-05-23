@@ -13,7 +13,7 @@ class ApiTokenController extends Controller
 
     public function register(Request $request){
 
-        //User validation champs
+        //User validation champs 422
         $validated = $request->validate([
             'email' => 'required|email',
             'name' => 'required',
@@ -23,6 +23,7 @@ class ApiTokenController extends Controller
         //Check if user exists
         $exists = User::where('email', $request->email)->exists();
 
+        //Si l'user existe 409
         if($exists){
             return response()->json(['error' => "Utilisateur déjà inscrit"], 409);
         }
@@ -37,7 +38,7 @@ class ApiTokenController extends Controller
         //Create TOKEN
         $token = $user->createToken($request->email)->plainTextToken;
 
-        //Return response
+        //Return response status 201
         return response()->json([
             'token' => $token
         ], 201);
@@ -46,7 +47,7 @@ class ApiTokenController extends Controller
 
     public function login(Request $request){
 
-        //Validation champs
+        //Validation champs 422
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -67,7 +68,27 @@ class ApiTokenController extends Controller
 
         return response()->json([
             'token' => $token
-        ], 202);
+        ], 200);
+
+    }
+
+    public function me(Request $request){
+
+        //dd($request->user());
+
+        if(!$request->user()){
+            return response()->json([
+                "errors" => "Unauthenticated"
+            ], 401);
+        }
+
+        return response()->json([
+            'id' => $request->user()->id,
+            'created_at' => $request->user()->created_at,
+            'updated_at' => $request->user()->updated_at,
+            'name' => $request->user()->name,
+            'email' => $request->user()->email
+        ]);
 
     }
 
