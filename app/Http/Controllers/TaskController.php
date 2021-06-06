@@ -171,7 +171,6 @@ class TaskController extends Controller
         //Update de la task
         $updatedTask = Task::find($id);
 
-
         $updatedTask->body = $request->body;
         $updatedTask->save();
 

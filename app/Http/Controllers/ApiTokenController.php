@@ -69,7 +69,10 @@ class ApiTokenController extends Controller
         $token = $user->createToken($request->email)->plainTextToken;
 
         return response()->json([
-            'token' => $token
+            'token' => $token,
+            'name' => $user->name,
+            'email' => $user->email,
+            'created_at' => $user->created_at
         ], 200);
 
     }
