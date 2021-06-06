@@ -51,7 +51,7 @@ class RegisterTest extends TestCase
     {
 
         $data = [
-            'email' => "email@test.com",
+            'email' => "new@email.com",
             'password' => "1234",
             'name' => 'Name'
         ];

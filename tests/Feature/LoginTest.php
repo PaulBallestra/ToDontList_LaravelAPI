@@ -20,7 +20,10 @@ class LoginTest extends TestCase
 
         $response = $this->postJson('api/auth/login', $data);
         $response->assertStatus(200)
-            ->assertJsonStructure(['token']);
+            ->assertJsonStructure(['token'])
+            ->assertJsonStructure(['name'])
+            ->assertJsonStructure(['email'])
+            ->assertJsonStructure(['created_at']);
 
     }
 
