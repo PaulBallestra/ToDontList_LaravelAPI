@@ -9,6 +9,7 @@ use Tests\TestCase;
 class LoginTest extends TestCase
 {
 
+    //Si il se connecte sans problèmes
     public function test_login_with_success()
     {
 
@@ -18,7 +19,8 @@ class LoginTest extends TestCase
         ];
 
         $response = $this->postJson('api/auth/login', $data);
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+            ->assertJsonStructure(['token']);
 
     }
 
